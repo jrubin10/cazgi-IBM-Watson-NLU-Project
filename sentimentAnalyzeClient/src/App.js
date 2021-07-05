@@ -5,11 +5,16 @@ import React from 'react';
 import axios from 'axios';
 
 class App extends React.Component {
-  state = {innercomp:<textarea rows="4" cols="50" id="textinput"/>,
+    componentDidMount(){
+        document.title = "Sentiment Analyzer v2"
+    }
+  
+    state = {innercomp:<textarea rows="4" cols="50" id="textinput"/>,
             mode: "text",
           sentimentOutput:[],
           sentiment:true
         }
+
   
   renderTextArea = ()=>{
     document.getElementById("textinput").value = "";
@@ -34,6 +39,7 @@ class App extends React.Component {
   }
 
   sendForSentimentAnalysis = () => {
+    //[original]this.setState({sentiment:true});
     this.setState({sentiment:true});
     let ret = "";
     let url = ".";
@@ -44,22 +50,22 @@ class App extends React.Component {
       url = url+"/text/sentiment?text="+document.getElementById("textinput").value;
     }
     ret = axios.get(url);
+    //Include code here to check the sentiment and fomrat the data accordingly
     ret.then((response)=>{
-
-      //Include code here to check the sentiment and fomrat the data accordingly
-
       this.setState({sentimentOutput:response.data});
-      let output = response.data;
+  });
+  }
+      /*let output = response.data;
       if(response.data === "positive") {
         output = <div style={{color:"green",fontSize:20}}>{response.data}</div>
       } else if (response.data === "negative"){
         output = <div style={{color:"red",fontSize:20}}>{response.data}</div>
       } else {
-        output = <div style={{color:"orange",fontSize:20}}>{response.data}</div>
+        output = <div style={{color:"yellow",fontSize:20}}>{response.data}</div>
       }
-      this.setState({sentimentOutput:output});
-    });
-  }
+    output.then((Response)=>{
+      this.setState({sentimentOutput:output});*/
+  
 
   sendForEmotionAnalysis = () => {
     this.setState({sentiment:false});

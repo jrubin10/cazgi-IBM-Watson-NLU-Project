@@ -11,20 +11,81 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
+    const analyzeParams = {
+    'url': req.query.url,
+    'features': {
+        'emotion': {}
+    }
+    };
 
-    return res.send({"happy":"90","sad":"10"});
+    getNLUInstance().analyze(analyzeParams)
+    .then(analysisResults => {
+        res.send(analysisResults);
+        console.log(JSON.stringify(analysisResults, null, 2));
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/url/sentiment", (req,res) => {
-    return res.send("url sentiment for "+req.query.url);
+    const analyzeParams = {
+  'url': req.query.url,
+  'features': {
+       'sentiment':{}
+    }
+    };
+
+    getNLUInstance().analyze(analyzeParams)
+    .then(analysisResults => {
+      res.send(analysisResults);
+        console.log(JSON.stringify(analysisResults, null, 2));
+     })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/text/emotion", (req,res) => {
-    return res.send({"happy":"10","sad":"90"});
+        const analyzeParams = {
+        'text': req.query.text,
+        'features': {
+            //'entities': {
+            'emotion': {}
+            //'sentiment': true,
+            //'limit': 2,
+            },
+          
+    };
+
+    getNLUInstance().analyze(analyzeParams)
+        .then(analysisResults => {
+            res.send(analysisResults);
+            console.log(JSON.stringify(analysisResults, null, 2));
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 app.get("/text/sentiment", (req,res) => {
-    return res.send("text sentiment for "+req.query.text);
+    const analyzeParams = {
+    'text': req.query.text,
+    'features': {
+        //'entities':{
+        'sentiment':{}
+        //}
+    }
+    };
+
+    getNLUInstance().analyze(analyzeParams)
+    .then(analysisResults => {
+        res.send(analysisResults);
+        console.log(JSON.stringify(analysisResults, null, 2));
+    })
+    .catch(err => {
+        console.log('error:', err);
+    });
 });
 
 let server = app.listen(8080, () => {

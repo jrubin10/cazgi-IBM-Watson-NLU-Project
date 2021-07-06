@@ -11,7 +11,15 @@ class EmotionTable extends React.Component {
             <tbody>
             {
             /*JR Note: Need to update this section with the map table*/
-            JSON.stringify(this.props.emotions)
+            //JSON.stringify(this.props.emotions)
+            Object.entries(this.props.emotions).map(function(mapentry) {
+                return (
+                <tr>
+                <td>{mapentry[0]}</td>
+                <td>{mapentry[1]}</td>
+                </tr>
+                     )
+            })
             }
             </tbody>
           </table>
